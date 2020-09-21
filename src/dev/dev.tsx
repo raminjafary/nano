@@ -5,12 +5,13 @@ import { Fragment } from '../fragment'
 import { Component } from '../component'
 import { Navigation, NavigationAction } from '../ui/navigation'
 import { Button } from '../ui/button'
-import { AppBar } from '../ui/appBar'
+import { AppBar, Toolbar } from '../ui/appBar'
 import { Fab } from '../ui/fab'
 import { Menu } from '../ui/menu'
 import { List, ListItem } from '../ui/list'
 import { Icon } from '../ui/icon'
 import { Sheet } from '../ui/sheet'
+import { Tabs } from '../ui/tabs'
 
 const DialogBtn = () => {
   const dialog = new Dialog()
@@ -94,7 +95,10 @@ const App = () => {
   }
   return (
     <Fragment>
-      <AppBar menu title="Home Page" icons={icons} />
+      <AppBar>
+        <Toolbar menu title="Home Page" icons={icons} />
+        <Tabs />
+      </AppBar>
 
       <Container>
         <div style="display: flex; flex-direction: column; align-items: start;">
@@ -198,5 +202,5 @@ const App = () => {
 }
 
 const root = document.getElementById('root')
-root?.setAttribute('style', 'margin-top: 56px; margin-bottom: 56px;')
+root?.setAttribute('style', 'margin-top: 104px; margin-bottom: 56px;')
 Nano.render(<App />, root)

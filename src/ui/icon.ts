@@ -5,6 +5,8 @@ interface IconProps {
   src: string
   active?: boolean
   color?: string
+  style?: string
+  size?: number
   onClick?: (e: MouseEvent) => void
 }
 
@@ -17,9 +19,9 @@ export class Icon extends Component<IconProps> {
   }
 
   render() {
-    const { src, active = true, color = '#6204EE', ...rest } = this.props
+    const { src, size = 16, active = true, color = '#6204EE', style = '', ...rest } = this.props
 
-    this.cssHash = strToHash(active + color)
+    this.cssHash = strToHash(active + color + size.toString())
 
     const colors = {
       active: color,
@@ -28,8 +30,8 @@ export class Icon extends Component<IconProps> {
 
     const styles = `
     i.icon-${this.cssHash} {
-      width: 22px;
-      height: 22px;
+      width: ${size}px;
+      height: ${size}px;
       display: inline-block;
       content: '';
 
@@ -55,7 +57,7 @@ export class Icon extends Component<IconProps> {
     const classes = [`icon-${this.cssHash}`]
     if (!active) classes.push(`icon_inactive-${this.cssHash}`)
 
-    const icon = h('i', { class: classes.join(' '), ...rest, style: iconStyle })
+    const icon = h('i', { class: classes.join(' '), ...rest, style: iconStyle + style })
 
     return icon
   }

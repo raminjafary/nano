@@ -47,7 +47,7 @@ export class NavigationAction extends Component<ActionProps> {
           this.props.onClick?.({ navigate: !!this.props.link, id: this.id, label: this.props.label, component: this })
         },
       },
-      this.props.icon ? h(Icon, { src: this.props.icon, active: this.props.active }) : null,
+      this.props.icon ? h(Icon, { size: 22, src: this.props.icon, active: this.props.active }) : null,
       label
     )
   }

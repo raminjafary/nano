@@ -75,9 +75,11 @@ const App = () => {
 
   const list = (
     <List>
-      <ListItem>Hello</ListItem>
-      <ListItem>Ciao</ListItem>
-      <ListItem>Salut</ListItem>
+      <ListItem>Normal</ListItem>
+      <ListItem icon="/dev/font-awesome/heart-solid.svg">Icon</ListItem>
+      <ListItem avatar="/dev/img/placeholder.png">Avatar</ListItem>
+      <ListItem square="/dev/img/placeholder.png">Square</ListItem>
+      <ListItem image="/dev/img/placeholder.png">Image</ListItem>
     </List>
   )
 
@@ -111,12 +113,12 @@ const App = () => {
           <Button text>TEXT</Button>
         </div>
 
+        <div>{list}</div>
+
+        <Icon src="/dev/font-awesome/ellipsis-v-solid.svg" />
+
         <div>
           <h2>What is Lorem Ipsum?</h2>
-
-          <Icon src="/dev/font-awesome/ellipsis-v-solid.svg" />
-
-          {list}
 
           <p>
             <strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has

@@ -1,13 +1,33 @@
 import { h, strToHash } from '../core'
 import { boxShadow, zIndex } from './_config'
+import { lightenColor } from './_helpers'
 
 export const Button = (props: { outlined?: boolean; text?: boolean; style?: string; [key: string]: any }) => {
-  const { children, outlined = false, text = false, style = '', ...rest } = props
+  const {
+    children,
+    outlined = false,
+    text = false,
+    background = '#6200ee',
+    color = '#ffffff',
+    style = '',
+    ...rest
+  } = props
+
+  const normal = !(outlined || text)
+
+  const bg = normal ? background : '#ffffff'
+  const clr = normal ? color : background
+  const hover = normal ? lightenColor(bg, 10) : lightenColor(bg, -10)
+  const ripple = normal ? lightenColor(bg, 50) : lightenColor(background, 50)
+
+  console.log(bg, hover, ripple)
+
+  const cssHash = strToHash(outlined.toString() + text.toString() + bg + style)
 
   const styles = `
-    .nano-jsx-button {
-      color: white;
-      background-color: #6200EE;
+    .nano_jsx_button-${cssHash} {
+      color: ${clr};
+      background: ${bg};
       border-radius: 4px;
       display: inline-block;
       font-size: 14px;
@@ -16,13 +36,43 @@ export const Button = (props: { outlined?: boolean; text?: boolean; style?: stri
       text-align: center;
       cursor: pointer;
 
+      -webkit-touch-callout:none;
+      -webkit-user-select:none;
+      -khtml-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
+      -webkit-tap-highlight-color:rgba(0,0,0,0);
+      
+
       z-index: ${zIndex.button}
 
       ${boxShadow}
-    }
-  `
 
-  const cssHash = strToHash(outlined.toString() + text + style)
+      border: none;
+      border-radius: 2px;
+      padding: 12px 18px;
+      font-size: 16px;
+      text-transform: uppercase;
+      box-shadow: 0 0 4px #999;
+      outline: none;
+    }
+
+    /* Ripple effect */
+    .ripple-${cssHash} {
+      background-position: center;
+      transition: background 0.8s;
+    }
+    .ripple-${cssHash}:hover {
+      background: ${hover} radial-gradient(circle, transparent 1%, ${hover} 1%) center/15000%;
+    }
+    .ripple-${cssHash}:active {
+      background-color: ${ripple};
+      background-size: 100%;
+      transition: background 0s;
+    }
+
+  `
 
   const el = document.querySelector(`[data-css-hash*="${cssHash}"]`)
   if (!el) {
@@ -32,13 +82,11 @@ export const Button = (props: { outlined?: boolean; text?: boolean; style?: stri
 
   let customStyles = ''
   if (outlined || text) {
-    customStyles += 'background: transparent; '
-    customStyles += 'color: #6200EE; '
     customStyles += 'padding-top: 9px; padding-bottom: 9px; '
     customStyles += '-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow none; '
-    if (outlined) customStyles += 'border: 1px #6200EE solid; '
+    if (outlined) customStyles += `border: 1px ${clr} solid; `
   }
   customStyles += style
 
-  return h('a', { class: 'nano-jsx-button', style: customStyles, ...rest }, children)
+  return h('a', { class: `nano_jsx_button-${cssHash} ripple-${cssHash}`, style: customStyles, ...rest }, children)
 }

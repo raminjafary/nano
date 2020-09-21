@@ -104,14 +104,11 @@ const App = () => {
         <div style="display: flex; flex-direction: column; align-items: start;">
           <SnackbarBtn />
           <DialogBtn />
-          <Button
-            onClick={(e: MouseEvent) => {
-              menu.open({ position: { x: e.clientX, y: e.clientY }, list })
-            }}
-            text
-          >
-            NOTHING
-          </Button>
+
+          <Button>NORMAL</Button>
+          <Button background="#FF0000">NORMAL</Button>
+          <Button outlined>OUTLINED</Button>
+          <Button text>TEXT</Button>
         </div>
 
         <div>

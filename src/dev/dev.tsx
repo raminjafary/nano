@@ -97,7 +97,7 @@ const App = () => {
   }
   return (
     <Fragment>
-      <AppBar>
+      <AppBar maxWidth={800}>
         <Toolbar menu title="Home Page" icons={icons} />
         <Tabs />
       </AppBar>

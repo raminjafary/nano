@@ -182,6 +182,10 @@ export class AppBar extends Component<AppBarProps> {
     .appBar_container .toolbar {
       display: flex;
       justify-content: space-between;
+    }
+
+    .appBar_container .toolbar,
+    .appBar_container .tabs_container {
       margin: 0 auto;
       ${this.props.maxWidth ? `max-width: ${this.props.maxWidth}px;` : ''}
     }

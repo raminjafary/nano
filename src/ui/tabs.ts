@@ -6,7 +6,7 @@ export class Tabs extends Component {
   items: HTMLElement[]
 
   didMount() {
-    let active = 2
+    let active = 5
 
     const adjustLine = (item: HTMLElement) => {
       if (!item) return
@@ -23,8 +23,17 @@ export class Tabs extends Component {
       item.classList.add('active')
     }
 
+    const scrollIntoView = (item: HTMLElement) => {
+      item.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
+      })
+    }
+
     tick(() => {
       adjustLine(this.items[active])
+      scrollIntoView(this.items[active])
     })
 
     for (let i = 0; i < this.items.length; i++) {
@@ -39,11 +48,7 @@ export class Tabs extends Component {
         setTimeout(() => adjustLine(item), 150)
 
         // does not work in safari
-        item.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'center',
-        })
+        scrollIntoView(item)
       })
     }
   }
@@ -116,7 +121,9 @@ export class Tabs extends Component {
     const item2 = h('li', { class: 'tabs_item' }, 'third')
     const item3 = h('li', { class: 'tabs_item' }, 'fourth')
     const item4 = h('li', { class: 'tabs_item' }, 'fifth')
-    this.items = [item0, item1, item2, item3, item4]
+    const item5 = h('li', { class: 'tabs_item' }, 'sixth')
+    const item6 = h('li', { class: 'tabs_item' }, 'seventh')
+    this.items = [item0, item1, item2, item3, item4, item5, item6]
 
     const list = h('ul', { class: 'tabs_list' }, this.items)
     this.line = h('div', { class: 'tabs_line' })

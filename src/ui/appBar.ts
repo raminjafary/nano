@@ -5,7 +5,7 @@ import { boxShadow, zIndex } from './_config'
 const classes = {
   container: 'appBar_container',
   scrollingDown: 'appBar_scrolling_down',
-  bar: 'toolbar',
+  bar: 'toolbar_container',
   left: 'toolbar_left',
   right: 'toolbar_right',
   icon: 'toolbar_icon',
@@ -24,11 +24,11 @@ interface ToolbarProps {
 export class Toolbar extends Component<ToolbarProps> {
   render() {
     const styles = `
-      .toolbar {
+      .toolbar_container {
         padding: 16px;
       }
 
-      .toolbar i.toolbar_icon {
+      .toolbar_container i.toolbar_icon {
         width: 22px;
         height: 22px;
         display: inline-block;
@@ -179,19 +179,19 @@ export class AppBar extends Component<AppBarProps> {
       top: -56px;
     }
 
-    .appBar_container .toolbar {
+    .appBar_container .toolbar_container {
       display: flex;
       justify-content: space-between;
     }
 
-    .appBar_container .toolbar,
+    .appBar_container .toolbar_container,
     .appBar_container .tabs_container {
       margin: 0 auto;
       ${this.props.maxWidth ? `max-width: ${this.props.maxWidth}px;` : ''}
     }
 
-    .appBar_container .toolbar .toolbar_left,
-    .appBar_container .toolbar .toolbar_right {
+    .appBar_container .toolbar_container .toolbar_left,
+    .appBar_container .toolbar_container .toolbar_right {
       display: flex;
       align-items: center;      
     }

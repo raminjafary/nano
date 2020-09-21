@@ -2,7 +2,55 @@ import { Component } from '../component'
 import { h, tick } from '../core'
 
 export class Tabs extends Component {
+  line: HTMLElement
+  items: HTMLElement[]
+
+  didMount() {
+    let active = 2
+
+    const adjustLine = (item: HTMLElement) => {
+      if (!item) return
+      const first = this.items[0].getBoundingClientRect()
+      const active = item.getBoundingClientRect()
+
+      this.line.style.left = `${active.x - first.x}px`
+      this.line.style.width = `${active.width}px`
+
+      // disable old
+      document.querySelector('.tabs_item.active')?.classList.remove('active')
+
+      // enable new
+      item.classList.add('active')
+    }
+
+    tick(() => {
+      adjustLine(this.items[active])
+    })
+
+    for (let i = 0; i < this.items.length; i++) {
+      const item = this.items[i]
+
+      item.addEventListener('click', () => {
+        active = i
+
+        // looks hacky, but works well :)
+        setTimeout(() => adjustLine(item), 50)
+        setTimeout(() => adjustLine(item), 100)
+        setTimeout(() => adjustLine(item), 150)
+
+        // does not work in safari
+        item.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center',
+        })
+      })
+    }
+  }
+
   render() {
+    console.log('render()')
+
     const styles = `
       .tabs_container {
         background: #6204ee;
@@ -68,55 +116,11 @@ export class Tabs extends Component {
     const item2 = h('li', { class: 'tabs_item' }, 'third')
     const item3 = h('li', { class: 'tabs_item' }, 'fourth')
     const item4 = h('li', { class: 'tabs_item' }, 'fifth')
+    this.items = [item0, item1, item2, item3, item4]
 
-    const items = [item0, item1, item2, item3, item4]
-
-    const list = h('ul', { class: 'tabs_list' }, items)
-
-    const line = h('div', { class: 'tabs_line' })
-
-    const container = h('div', { class: 'tabs_container' }, list, line)
-
-    let active = 2
-
-    const adjustLine = (item: HTMLElement) => {
-      if (!item) return
-      const first = items[0].getBoundingClientRect()
-      const active = item.getBoundingClientRect()
-
-      line.style.left = `${active.x - first.x}px`
-      line.style.width = `${active.width}px`
-
-      // disable old
-      document.querySelector('.tabs_item.active')?.classList.remove('active')
-
-      // enable new
-      item.classList.add('active')
-    }
-
-    tick(() => {
-      adjustLine(items[active])
-    })
-
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i]
-
-      item.addEventListener('click', () => {
-        active = i
-
-        // looks hacky, but works well :)
-        setTimeout(() => adjustLine(item), 50)
-        setTimeout(() => adjustLine(item), 100)
-        setTimeout(() => adjustLine(item), 150)
-
-        // does not work in safari
-        item.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'center',
-        })
-      })
-    }
+    const list = h('ul', { class: 'tabs_list' }, this.items)
+    this.line = h('div', { class: 'tabs_line' })
+    const container = h('div', { class: 'tabs_container' }, list, this.line)
 
     return container
   }

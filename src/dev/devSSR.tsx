@@ -5,13 +5,19 @@ import { Fragment } from '../fragment'
 import { Component } from '../component'
 import { Navigation, NavigationAction } from '../ui/navigation'
 import { Button } from '../ui/button'
-import { AppBar } from '../ui/appBar'
+import { AppBar, Toolbar } from '../ui/appBar'
 import { Fab } from '../ui/fab'
 import { Menu } from '../ui/menu'
 import { List, ListItem } from '../ui/list'
 import { Icon } from '../ui/icon'
 import { renderSSR } from '../ssr'
 import { Helmet } from '../components/helmet'
+import { Tabs } from '../ui/tabs'
+
+// @ts-ignore
+import fs from 'fs'
+// @ts-ignore
+import { join } from 'path'
 
 // @ts-ignore
 import http from 'http'
@@ -95,9 +101,13 @@ const App = () => {
       />
     ),
   }
+
   return (
     <Fragment>
-      <AppBar menu title="Home Page" icons={icons} />
+      <AppBar>
+        <Toolbar menu title="Home Page" icons={icons} />
+        <Tabs />
+      </AppBar>
 
       <Container>
         <div style="display: flex; flex-direction: column; align-items: start;">
@@ -198,11 +208,6 @@ let html = `
 
 // minify
 // html = html.replace(/[\s]+/gm, ' ')
-
-// @ts-ignore
-import fs from 'fs'
-// @ts-ignore
-import { join } from 'path'
 
 http
   .createServer((req: any, res: any) => {

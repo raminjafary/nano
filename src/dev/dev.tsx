@@ -83,38 +83,8 @@ const App = () => {
     </List>
   )
 
-  const icons = {
-    menu: (
-      <Icon
-        color="white"
-        src={'/dev/font-awesome/ellipsis-v-solid.svg'}
-        onClick={(e: MouseEvent) => {
-          menu.open({ position: { x: e.clientX, y: e.clientY }, list })
-          console.log('on click', e)
-        }}
-      />
-    ),
-  }
   return (
     <Fragment>
-      <AppBar>
-        <Toolbar menu title="Home Page" icons={icons} />
-        <AppBar>
-          <Toolbar menu title="Home Page" icons={icons} />
-          <Tabs active={4}>
-            <Tab>first</Tab>
-            <Tab>second</Tab>
-            <Tab>third</Tab>
-            <Tab>fourth</Tab>
-            <Tab href="/dev/ui.html?tab=4">fifth</Tab>
-            <Tab>sixth</Tab>
-            <Tab>seventh</Tab>
-            <Tab>eight</Tab>
-            <Tab>ninth</Tab>
-          </Tabs>
-        </AppBar>
-      </AppBar>
-
       <Container>
         <div style="display: flex; flex-direction: column; align-items: start;">
           <SnackbarBtn />
@@ -208,11 +178,58 @@ const App = () => {
         <span style="font-size: 14px;">ADD NEW</span>
       </Fab>
 
-      <NavBar />
+      {/* <NavBar /> */}
     </Fragment>
   )
 }
 
+const icons = {
+  menu: (
+    <Icon
+      color="white"
+      src={'/dev/font-awesome/ellipsis-v-solid.svg'}
+      // onClick={(e: MouseEvent) => {
+      //   menu.open({ position: { x: e.clientX, y: e.clientY }, list })
+      //   console.log('on click', e)
+      // }}
+    />
+  ),
+}
+
 const root = document.getElementById('root')
-root?.setAttribute('style', 'margin-top: 104px; margin-bottom: 56px;')
-Nano.render(<App />, root)
+
+// Top Bar
+setTimeout(() => {
+  Nano.render(
+    <AppBar>
+      <Toolbar menu title="Home Page" icons={icons} />
+      <AppBar>
+        <Toolbar menu title="Home Page" icons={icons} />
+        <Tabs active={4}>
+          <Tab>first</Tab>
+          <Tab>second</Tab>
+          <Tab>third</Tab>
+          <Tab>fourth</Tab>
+          <Tab href="/dev/ui.html?tab=4">fifth</Tab>
+          <Tab>sixth</Tab>
+          <Tab>seventh</Tab>
+          <Tab>eight</Tab>
+          <Tab>ninth</Tab>
+        </Tabs>
+      </AppBar>
+    </AppBar>,
+    document.body,
+    false
+  )
+})
+
+// Content
+setTimeout(() => {
+  root?.setAttribute('style', 'margin-top: 104px; margin-bottom: 56px;')
+  Nano.render(<App />, root)
+})
+
+// Bottom Bar
+setTimeout(() => {
+  Nano.render(<NavBar />, document.body, false)
+})

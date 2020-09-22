@@ -101,12 +101,12 @@ const App = () => {
         <Toolbar menu title="Home Page" icons={icons} />
         <AppBar>
           <Toolbar menu title="Home Page" icons={icons} />
-          <Tabs active={2}>
+          <Tabs active={4}>
             <Tab>first</Tab>
             <Tab>second</Tab>
             <Tab>third</Tab>
             <Tab>fourth</Tab>
-            <Tab>fifth</Tab>
+            <Tab href="/dev/ui.html?tab=4">fifth</Tab>
             <Tab>sixth</Tab>
             <Tab>seventh</Tab>
             <Tab>eight</Tab>

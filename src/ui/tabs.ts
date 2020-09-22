@@ -9,7 +9,11 @@ interface TabsProps {
 export const Tab = (props: any) => {
   const classes = ['tabs_item']
   if (props.active) classes.push('active')
-  return h('li', { class: classes.join(' ') }, props.children)
+
+  const link = props.href ? { href: props.href } : {}
+
+  const a = h('a', { ...link }, props.children)
+  return h('li', { class: classes.join(' ') }, a)
 }
 
 export class Tabs extends Component<TabsProps> {
@@ -89,6 +93,7 @@ export class Tabs extends Component<TabsProps> {
       }
 
       .tabs_list {
+        height: 100%;
         display: flex;
         list-style-type: none;
         margin: 0;
@@ -97,14 +102,24 @@ export class Tabs extends Component<TabsProps> {
       }
 
       .tabs_item {
-        padding: 16px 32px;
+        padding-top: 16px;
         font-size: 14px;
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.75);
         transition: color 0.2s;
       }
+      
+      
+      .tabs_item a {
+        font-size: 14px;
+        padding: 16px 32px;
+        text-decoration: none;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.75);
+        transition: color 0.2s;
+      }
 
-      .tabs_item.active {
+      .tabs_item.active a {
         color: rgba(255, 255, 255, 1);
       }
 

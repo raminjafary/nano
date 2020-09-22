@@ -1,8 +1,15 @@
 import { h, strToHash } from '../core'
 import { boxShadow, zIndex } from './_config'
 import { lightenColor } from './_helpers'
+import { Icon } from './icon'
 
-export const Button = (props: { outlined?: boolean; text?: boolean; style?: string; [key: string]: any }) => {
+export const Button = (props: {
+  outlined?: boolean
+  text?: boolean
+  style?: string
+  icon?: string
+  [key: string]: any
+}) => {
   const {
     children,
     outlined = false,
@@ -11,6 +18,7 @@ export const Button = (props: { outlined?: boolean; text?: boolean; style?: stri
     color = '#ffffff',
     style = '',
     class: className = '',
+    icon,
     ...rest
   } = props
 
@@ -33,6 +41,7 @@ export const Button = (props: { outlined?: boolean; text?: boolean; style?: stri
       margin: 0px 0px 1em 0px;
       text-align: center;
       cursor: pointer;
+      display: flex;
 
       -webkit-touch-callout:none;
       -webkit-user-select:none;
@@ -83,9 +92,12 @@ export const Button = (props: { outlined?: boolean; text?: boolean; style?: stri
   }
   customStyles += style
 
+  console.log(icon)
+
   return h(
     'a',
     { class: `nano_jsx_button-${cssHash} ripple-${cssHash} ${className}`, style: customStyles, ...rest },
+    icon ? h(Icon, { style: 'margin-left: -4px; margin-right: 8px; width: 14px; height: 14px;' }, icon) : null,
     children
   )
 }

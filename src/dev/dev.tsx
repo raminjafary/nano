@@ -93,6 +93,9 @@ const App = () => {
           <Button>NORMAL</Button>
           <Button background="#d04fb3">ROSA</Button>
           <Button outlined>OUTLINED</Button>
+          <Button outlined icon="/dev/font-awesome/user-solid.svg">
+            ICON
+          </Button>
           <Button text>TEXT</Button>
         </div>
 
@@ -138,7 +141,7 @@ const App = () => {
         mini
         left
       >
-        <span style="font-size: 32px;">+</span>
+        <span style="font-size: 32px; line-height: 1;">+</span>
       </Fab>
 
       <Fab
@@ -155,7 +158,7 @@ const App = () => {
           )
         }}
       >
-        <span style="font-size: 32px;">+</span>
+        <Icon size={28} color="white" src="/dev/font-awesome/heart-solid.svg" />
       </Fab>
 
       <Fab

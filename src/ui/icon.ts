@@ -21,6 +21,9 @@ export class Icon extends Component<IconProps> {
   render() {
     const { src, size = 16, active = true, color = '#6204EE', style = '', ...rest } = this.props
 
+    // @ts-ignore
+    const children = this.props.children
+
     this.cssHash = strToHash(active + color + size.toString())
 
     const colors = {
@@ -52,7 +55,9 @@ export class Icon extends Component<IconProps> {
     document.head.appendChild(styleElement)
 
     // const iconStyle = `-webkit-mask: url(/dev/font-awesome/ellipsis-v-solid.svg) no-repeat 50% 50%;mask: url(/dev/font-awesome/ellipsis-v-solid.svg) no-repeat 50% 50%;`
-    const iconStyle = `-webkit-mask: url(${src}) no-repeat 50% 50%; mask: url(${src}) no-repeat 50% 50%;`
+    const iconStyle = `-webkit-mask: url(${src || children}) no-repeat 50% 50%; mask: url(${
+      src || children
+    }) no-repeat 50% 50%;`
 
     const classes = [`icon-${this.cssHash}`]
     if (!active) classes.push(`icon_inactive-${this.cssHash}`)

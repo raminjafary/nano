@@ -10,6 +10,7 @@ export const Button = (props: { outlined?: boolean; text?: boolean; style?: stri
     background = '#6200ee',
     color = '#ffffff',
     style = '',
+    class: className = '',
     ...rest
   } = props
 
@@ -19,10 +20,7 @@ export const Button = (props: { outlined?: boolean; text?: boolean; style?: stri
   const clr = normal ? color : background
   const hover = normal ? lightenColor(bg, 10) : lightenColor(bg, -10)
   const ripple = normal ? lightenColor(bg, 50) : lightenColor(background, 50)
-
-  console.log(bg, hover, ripple)
-
-  const cssHash = strToHash(outlined.toString() + text.toString() + bg + style)
+  const cssHash = strToHash(outlined.toString() + text.toString() + bg + clr + style)
 
   const styles = `
     .nano_jsx_button-${cssHash} {
@@ -50,9 +48,6 @@ export const Button = (props: { outlined?: boolean; text?: boolean; style?: stri
       ${boxShadow}
 
       border: none;
-      border-radius: 2px;
-      padding: 12px 18px;
-      font-size: 16px;
       text-transform: uppercase;
       box-shadow: 0 0 4px #999;
       outline: none;
@@ -88,5 +83,9 @@ export const Button = (props: { outlined?: boolean; text?: boolean; style?: stri
   }
   customStyles += style
 
-  return h('a', { class: `nano_jsx_button-${cssHash} ripple-${cssHash}`, style: customStyles, ...rest }, children)
+  return h(
+    'a',
+    { class: `nano_jsx_button-${cssHash} ripple-${cssHash} ${className}`, style: customStyles, ...rest },
+    children
+  )
 }

@@ -1,5 +1,6 @@
 import { h } from '../core'
 import { boxShadow, zIndex } from './_config'
+import { Button } from './button'
 
 // Dialog just like just like: https://material.io/components/Dialogs
 
@@ -123,16 +124,14 @@ export class Dialog {
     }
 
     #dialog_container .dialog .dialog_action {
-      font-size: 14px;
-      cursor: pointer;
-      padding: 10px 8px;
+      margin-bottom: 0px;
       margin-left: 10px;
     }
 
-    #dialog_container .dialog .dialog_action:hover {
+    /*#dialog_container .dialog .dialog_action:hover {
       border-radius: 4px;      
       background: #0000000a;
-    }
+    }*/
 
     @keyframes dialog-fadein {
       from {opacity: 0;}
@@ -170,11 +169,15 @@ export class Dialog {
 
     const Dialog = (_header: string | undefined, _body: string | undefined, _actions: any) => {
       const actionsArray = _actions.map((action: any) => {
+        console.log('color', action.color, this.defaultActionColor)
+
         return h(
-          'a',
+          Button,
           {
+            text: true,
+            color: action.color || this.defaultActionColor,
             class: 'dialog_action',
-            style: `color: ${action.color || this.defaultActionColor}`,
+            // style: `color: ${action.color || this.defaultActionColor}`,
             onClick: () => {
               callback({ name: action.name, id: action.id })
               this.remove()
@@ -183,6 +186,7 @@ export class Dialog {
           action.name.toUpperCase()
         )
       })
+
       const title = h('h2', { class: 'dialog_header' }, _header)
       const body = h('div', { class: 'dialog_body' }, _body)
       const actions = h('div', { class: 'dialog_actions' }, actionsArray)

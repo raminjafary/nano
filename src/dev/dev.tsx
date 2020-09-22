@@ -91,7 +91,7 @@ const App = () => {
           <DialogBtn />
 
           <Button>NORMAL</Button>
-          <Button background="#FF0000">NORMAL</Button>
+          <Button background="#d04fb3">ROSA</Button>
           <Button outlined>OUTLINED</Button>
           <Button text>TEXT</Button>
         </div>

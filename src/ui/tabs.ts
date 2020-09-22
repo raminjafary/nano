@@ -1,13 +1,23 @@
 import { Component } from '../component'
-import { h, tick } from '../core'
+import { h, tick, render } from '../core'
 
-export class Tabs extends Component {
+interface TabsProps {
+  active?: number
+  children?: any[]
+}
+
+export const Tab = (props: any) => {
+  const classes = ['tabs_item']
+  if (props.active) classes.push('active')
+  return h('li', { class: classes.join(' ') }, props.children)
+}
+
+export class Tabs extends Component<TabsProps> {
   line: HTMLElement
   items: HTMLElement[]
+  active = this.props.active || 0
 
   didMount() {
-    let active = 5
-
     const adjustLine = (item: HTMLElement) => {
       if (!item) return
       const first = this.items[0].getBoundingClientRect()
@@ -32,15 +42,15 @@ export class Tabs extends Component {
     }
 
     tick(() => {
-      adjustLine(this.items[active])
-      scrollIntoView(this.items[active])
+      adjustLine(this.items[this.active])
+      scrollIntoView(this.items[this.active])
     })
 
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]
 
       item.addEventListener('click', () => {
-        active = i
+        this.active = i
 
         // looks hacky, but works well :)
         setTimeout(() => adjustLine(item), 50)
@@ -107,23 +117,34 @@ export class Tabs extends Component {
         position: relative;
         top: -2px;
 
-        left: 1px;
-        width: 50px;
+        opacity: 0;
+        
+        left: 50%;
+        width: 0px;
 
         transition: left 0.5s, width 0.5s;
-      }`
+
+        animation-name: tabs_line_fadein;
+        animation-duration: 0.25s;
+        animation-delay: 0.25s;
+        animation-fill-mode: forwards;
+      }
+      
+      @keyframes tabs_line_fadein {
+        from {opacity: 0;}
+        to {opacity: 1;}
+      }
+      `
 
     const styleElement = h('style', {}, styles)
     document.head.appendChild(styleElement)
 
-    const item0 = h('li', { class: 'tabs_item' }, 'first')
-    const item1 = h('li', { class: 'tabs_item' }, 'seconds')
-    const item2 = h('li', { class: 'tabs_item' }, 'third')
-    const item3 = h('li', { class: 'tabs_item' }, 'fourth')
-    const item4 = h('li', { class: 'tabs_item' }, 'fifth')
-    const item5 = h('li', { class: 'tabs_item' }, 'sixth')
-    const item6 = h('li', { class: 'tabs_item' }, 'seventh')
-    this.items = [item0, item1, item2, item3, item4, item5, item6]
+    // set the active tab
+    this.props.children?.forEach((c, i) => {
+      if (i === this.active) c.props = { ...c.props, active: true }
+    })
+
+    this.items = render(this.props.children)
 
     const list = h('ul', { class: 'tabs_list' }, this.items)
     this.line = h('div', { class: 'tabs_line' })

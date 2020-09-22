@@ -12,7 +12,7 @@ import { List, ListItem } from '../ui/list'
 import { Icon } from '../ui/icon'
 import { renderSSR } from '../ssr'
 import { Helmet } from '../components/helmet'
-import { Tabs } from '../ui/tabs'
+import { Tabs, Tab } from '../ui/tabs'
 
 // @ts-ignore
 import fs from 'fs'
@@ -83,9 +83,11 @@ const App = () => {
 
   const list = (
     <List>
-      <ListItem>Hello</ListItem>
-      <ListItem>Ciao</ListItem>
-      <ListItem>Salut</ListItem>
+      <ListItem>Normal</ListItem>
+      <ListItem icon="/dev/font-awesome/heart-solid.svg">Icon</ListItem>
+      <ListItem avatar="/dev/img/placeholder.png">Avatar</ListItem>
+      <ListItem square="/dev/img/placeholder.png">Square</ListItem>
+      <ListItem image="/dev/img/placeholder.png">Image</ListItem>
     </List>
   )
 
@@ -106,7 +108,21 @@ const App = () => {
     <Fragment>
       <AppBar>
         <Toolbar menu title="Home Page" icons={icons} />
-        <Tabs />
+        {/**
+         * Set active={x:number} on the Tabs
+         * Or active on the Single Tab
+         */}
+        <Tabs active={2}>
+          <Tab>first</Tab>
+          <Tab>second</Tab>
+          <Tab>third</Tab>
+          <Tab>fourth</Tab>
+          <Tab>fifth</Tab>
+          <Tab>sixth</Tab>
+          <Tab>seventh</Tab>
+          <Tab>eight</Tab>
+          <Tab>ninth</Tab>
+        </Tabs>
       </AppBar>
 
       <Container>
@@ -194,7 +210,7 @@ let html = `
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>#root { margin-top: 56px; margin-bottom: 56px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <style>#root { margin-top: 104px; margin-bottom: 56px; font-family: Arial, Helvetica, sans-serif; }</style>
     ${head.join('\n')}
   </head>
   <body>
@@ -223,8 +239,9 @@ http
         res.writeHead(404)
         return res.end(data)
       }
-      res.setHeader('Content-Type', 'image/svg+xml')
+      const type = /\.png$/.test(url) ? 'image/png' : 'image/svg+xml'
+      res.setHeader('Content-Type', type)
       return res.end(data)
     })
   })
-  .listen(8080) // Activates this server, listening on port 8080.
+  .listen(8080, () => console.log('open http://localhost:8080/index.html in your browser'))

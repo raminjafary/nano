@@ -11,7 +11,7 @@ import { Menu } from '../ui/menu'
 import { List, ListItem } from '../ui/list'
 import { Icon } from '../ui/icon'
 import { Sheet } from '../ui/sheet'
-import { Tabs } from '../ui/tabs'
+import { Tabs, Tab } from '../ui/tabs'
 
 const DialogBtn = () => {
   const dialog = new Dialog()
@@ -99,7 +99,20 @@ const App = () => {
     <Fragment>
       <AppBar>
         <Toolbar menu title="Home Page" icons={icons} />
-        <Tabs />
+        <AppBar>
+          <Toolbar menu title="Home Page" icons={icons} />
+          <Tabs active={2}>
+            <Tab>first</Tab>
+            <Tab>second</Tab>
+            <Tab>third</Tab>
+            <Tab>fourth</Tab>
+            <Tab>fifth</Tab>
+            <Tab>sixth</Tab>
+            <Tab>seventh</Tab>
+            <Tab>eight</Tab>
+            <Tab>ninth</Tab>
+          </Tabs>
+        </AppBar>
       </AppBar>
 
       <Container>

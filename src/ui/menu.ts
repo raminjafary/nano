@@ -38,6 +38,10 @@ export class Menu {
     return el
   }
 
+  close() {
+    removeAllChildNodes(this.getParentElement(this.cssHash))
+  }
+
   open(menuOptions: MenuOptions) {
     const { position, list } = menuOptions
 
@@ -46,20 +50,31 @@ export class Menu {
     const top = position.y < window.innerHeight / 2 ? 'top' : 'bottom'
 
     const styles = `
-      #menu_items_container-${this.cssHash} {
-        position: fixed;
-        background: white;
-        
-        border-radius: 4px;
-        min-width: 112px;
+   
+    #menu_items_background-${this.cssHash} {
+      width: 100vw;
+      height: 100vh;
+      background: transparent;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: ${zIndex.menu}      
+    }
+   
+    #menu_items_list-${this.cssHash} {
+      position: fixed;
+      background: white;
+      
+      border-radius: 4px;
+      min-width: 112px;
 
-        ${top}: ${position.y > window.innerHeight / 2 ? window.innerHeight - position.y : position.y}px;
-        ${left}: ${position.x > window.innerWidth / 2 ? window.innerWidth - position.x : position.x}px;
+      ${top}: ${position.y > window.innerHeight / 2 ? window.innerHeight - position.y : position.y}px;
+      ${left}: ${position.x > window.innerWidth / 2 ? window.innerWidth - position.x : position.x}px;
 
-        z-index: ${zIndex.menu}
+      z-index: ${zIndex.menu}
 
-        ${boxShadow}
-      }
+      ${boxShadow}
+    }
 
     `
 
@@ -71,6 +86,11 @@ export class Menu {
     const styleElement = h('style', { 'data-css-hash': this.cssHash }, styles)
     document.head.appendChild(styleElement)
 
-    this.getParentElement(this.cssHash).appendChild(render(list))
+    const itemsList = h('div', { id: `menu_items_list-${this.cssHash}` }, list)
+    const itemsBg = h('div', { onClick: () => this.close(), id: `menu_items_background-${this.cssHash}` }, itemsList)
+
+    itemsList.addEventListener('click', (e: Event) => e.stopPropagation())
+
+    this.getParentElement(this.cssHash).appendChild(render(itemsBg))
   }
 }

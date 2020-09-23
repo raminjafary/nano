@@ -69,10 +69,6 @@ export class Tabs extends Component<TabsProps> {
   }
 
   render() {
-    let offset = this.active * 102
-
-    console.log('render()')
-
     const styles = `
       .tabs_container {
         background: #6204ee;

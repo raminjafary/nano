@@ -1,5 +1,5 @@
 import { h, strToHash } from '../core'
-import { boxShadow, zIndex, userSelect } from './_config'
+import { boxShadow, zIndex, userSelect, rippleEffect } from './_config'
 import { lightenColor } from './_helpers'
 import { Icon } from './icon'
 
@@ -26,9 +26,11 @@ export const Button = (props: {
 
   const bg = normal ? background : '#ffffff'
   const clr = normal ? color : background
-  const hover = normal ? lightenColor(bg, 10) : lightenColor(bg, -10)
-  const ripple = normal ? lightenColor(bg, 50) : lightenColor(background, 50)
+  const hoverClr = normal ? lightenColor(bg, 10) : lightenColor(bg, -10)
+  const rippleClr = normal ? lightenColor(bg, 50) : lightenColor(background, 50)
   const cssHash = strToHash(outlined.toString() + text.toString() + bg + clr + style)
+
+  const ripple = rippleEffect(rippleClr, hoverClr)
 
   const styles = `
     .nano_jsx_button-${cssHash} {
@@ -56,20 +58,7 @@ export const Button = (props: {
       outline: none;
     }
 
-    /* Ripple effect */
-    .ripple-${cssHash} {
-      background-position: center;
-      transition: background 0.8s;
-    }
-    .ripple-${cssHash}:hover {
-      background: ${hover} radial-gradient(circle, transparent 1%, ${hover} 1%) center/15000%;
-    }
-    .ripple-${cssHash}:active {
-      background-color: ${ripple};
-      background-size: 100%;
-      transition: background 0s;
-    }
-
+    ${ripple.styles}
   `
 
   const el = document.querySelector(`[data-css-hash*="${cssHash}"]`)
@@ -90,7 +79,7 @@ export const Button = (props: {
 
   return h(
     'a',
-    { class: `nano_jsx_button-${cssHash} ripple-${cssHash} ${className}`, style: customStyles, ...rest },
+    { class: `nano_jsx_button-${cssHash} ${ripple.class} ${className}`, style: customStyles, ...rest },
     icon ? h(Icon, { style: 'margin-left: -4px; margin-right: 8px; width: 14px; height: 14px;' }, icon) : null,
     children
   )

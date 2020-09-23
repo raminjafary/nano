@@ -1,6 +1,6 @@
 import { Component } from '../component'
 import { h, tick, render } from '../core'
-import { userSelect } from './_config'
+import { userSelect, rippleEffect } from './_config'
 
 interface TabsProps {
   active?: number
@@ -8,7 +8,7 @@ interface TabsProps {
 }
 
 export const Tab = (props: any) => {
-  const classes = ['tabs_item']
+  const classes = ['tabs_item', props.rippleClass]
   if (props.active) classes.push('active')
 
   const link = props.href ? { href: props.href } : {}
@@ -69,6 +69,8 @@ export class Tabs extends Component<TabsProps> {
   }
 
   render() {
+    let ripple = rippleEffect('#ffffff70', '#5902db')
+
     const styles = `
       .tabs_container {
         background: #6204ee;
@@ -135,6 +137,8 @@ export class Tabs extends Component<TabsProps> {
         }
       }
 
+      ${ripple.styles}
+
       .tabs_line {
         border-bottom: 2px solid white;
         position: relative;
@@ -164,7 +168,10 @@ export class Tabs extends Component<TabsProps> {
 
     // set the active tab
     this.props.children?.forEach((c, i) => {
+      // is active
       if (i === this.active) c.props = { ...c.props, active: true }
+      // add ripple class
+      c.props = { ...c.props, rippleClass: ripple.class }
     })
 
     this.items = render(this.props.children)

@@ -208,7 +208,7 @@ setTimeout(() => {
       <Toolbar menu title="Home Page" icons={icons} />
       <AppBar>
         <Toolbar menu title="Home Page" icons={icons} />
-        <Tabs active={4}>
+        <Tabs active={1}>
           <Tab>first</Tab>
           <Tab>second</Tab>
           <Tab>third</Tab>

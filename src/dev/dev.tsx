@@ -13,6 +13,18 @@ import { Icon } from '../ui/icon'
 import { Sheet } from '../ui/sheet'
 import { Tabs, Tab } from '../ui/tabs'
 
+const menu = new Menu()
+
+const list = (
+  <List>
+    <ListItem>Normal</ListItem>
+    <ListItem icon="/dev/font-awesome/heart-solid.svg">Icon</ListItem>
+    <ListItem avatar="/dev/img/placeholder.png">Avatar</ListItem>
+    <ListItem square="/dev/img/placeholder.png">Square</ListItem>
+    <ListItem image="/dev/img/placeholder.png">Image</ListItem>
+  </List>
+)
+
 const DialogBtn = () => {
   const dialog = new Dialog()
 
@@ -71,18 +83,6 @@ const Container = (props: any) => {
 }
 
 const App = () => {
-  const menu = new Menu()
-
-  const list = (
-    <List>
-      <ListItem>Normal</ListItem>
-      <ListItem icon="/dev/font-awesome/heart-solid.svg">Icon</ListItem>
-      <ListItem avatar="/dev/img/placeholder.png">Avatar</ListItem>
-      <ListItem square="/dev/img/placeholder.png">Square</ListItem>
-      <ListItem image="/dev/img/placeholder.png">Image</ListItem>
-    </List>
-  )
-
   return (
     <Fragment>
       <Container>
@@ -191,10 +191,10 @@ const icons = {
     <Icon
       color="white"
       src={'/dev/font-awesome/ellipsis-v-solid.svg'}
-      // onClick={(e: MouseEvent) => {
-      //   menu.open({ position: { x: e.clientX, y: e.clientY }, list })
-      //   console.log('on click', e)
-      // }}
+      onClick={(e: MouseEvent) => {
+        menu.open({ position: { x: e.clientX, y: e.clientY }, list })
+        console.log('on click', e)
+      }}
     />
   ),
 }

@@ -108,16 +108,17 @@ const App = () => {
     <Fragment>
       <AppBar>
         <Toolbar menu title="Home Page" icons={icons} />
-        {/**
-         * Set active={x:number} on the Tabs
-         * Or active on the Single Tab
-         */}
-        <Tabs active={4}>
+        <Tabs active={1}>
+          <Tab>first</Tab>
+          <Tab>second</Tab>
+          <Tab>third</Tab>
+        </Tabs>
+        <Tabs scroll active={1}>
           <Tab>first</Tab>
           <Tab>second</Tab>
           <Tab>third</Tab>
           <Tab>fourth</Tab>
-          <Tab href="/dev/ui.html?tab=4">fifth</Tab>
+          <Tab>fifth</Tab>
           <Tab>sixth</Tab>
           <Tab>seventh</Tab>
           <Tab>eight</Tab>
@@ -211,7 +212,7 @@ let html = `
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>#root { 
-      margin-top: 104px;
+      margin-top: 152px;
       margin-bottom: 56px;
       font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
       'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;

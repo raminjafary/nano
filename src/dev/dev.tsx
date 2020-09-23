@@ -206,20 +206,22 @@ setTimeout(() => {
   Nano.render(
     <AppBar>
       <Toolbar menu title="Home Page" icons={icons} />
-      <AppBar>
-        <Toolbar menu title="Home Page" icons={icons} />
-        <Tabs active={1}>
-          <Tab>first</Tab>
-          <Tab>second</Tab>
-          <Tab>third</Tab>
-          <Tab>fourth</Tab>
-          <Tab href="/dev/ui.html?tab=4">fifth</Tab>
-          <Tab>sixth</Tab>
-          <Tab>seventh</Tab>
-          <Tab>eight</Tab>
-          <Tab>ninth</Tab>
-        </Tabs>
-      </AppBar>
+      <Tabs active={1}>
+        <Tab>first</Tab>
+        <Tab>second</Tab>
+        <Tab>third</Tab>
+      </Tabs>
+      <Tabs scroll active={1}>
+        <Tab>first</Tab>
+        <Tab>second</Tab>
+        <Tab>third</Tab>
+        <Tab>fourth</Tab>
+        <Tab>fifth</Tab>
+        <Tab>sixth</Tab>
+        <Tab>seventh</Tab>
+        <Tab>eight</Tab>
+        <Tab>ninth</Tab>
+      </Tabs>
     </AppBar>,
     document.body,
     false
@@ -228,7 +230,7 @@ setTimeout(() => {
 
 // Content
 setTimeout(() => {
-  root?.setAttribute('style', 'margin-top: 104px; margin-bottom: 56px;')
+  root?.setAttribute('style', 'margin-top: 152px; margin-bottom: 56px;')
   Nano.render(<App />, root)
 })
 

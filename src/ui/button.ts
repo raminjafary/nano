@@ -1,5 +1,5 @@
 import { h, strToHash } from '../core'
-import { boxShadow, zIndex } from './_config'
+import { boxShadow, zIndex, userSelect } from './_config'
 import { lightenColor } from './_helpers'
 import { Icon } from './icon'
 
@@ -43,13 +43,7 @@ export const Button = (props: {
       cursor: pointer;
       display: flex;
 
-      -webkit-touch-callout:none;
-      -webkit-user-select:none;
-      -khtml-user-select:none;
-      -moz-user-select:none;
-      -ms-user-select:none;
-      user-select:none;
-      -webkit-tap-highlight-color:rgba(0,0,0,0);
+      ${userSelect}
       
 
       z-index: ${zIndex.button}

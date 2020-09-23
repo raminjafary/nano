@@ -1,5 +1,6 @@
 import { Component } from '../component'
 import { h, tick, render } from '../core'
+import { userSelect } from './_config'
 
 interface TabsProps {
   active?: number
@@ -68,6 +69,8 @@ export class Tabs extends Component<TabsProps> {
   }
 
   render() {
+    let offset = this.active * 102
+
     console.log('render()')
 
     const styles = `
@@ -79,6 +82,8 @@ export class Tabs extends Component<TabsProps> {
 
         overflow-x: scroll;
         overflow-y: hidden;
+
+        ${userSelect}
       }
 
       /* Hide scrollbar for Chrome, Safari and Opera */
@@ -123,8 +128,15 @@ export class Tabs extends Component<TabsProps> {
         color: rgba(255, 255, 255, 1);
       }
 
-      .tabs_item:hover {
+      .tabs_item:active {
         background: #5902db;
+      }
+
+      /* if the primary input mechanism system of the device can hover over elements with ease, we use hover */
+      @media (hover: hover) {
+        .tabs_item:hover {
+          background: #5902db;
+        }
       }
 
       .tabs_line {

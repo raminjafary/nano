@@ -1,6 +1,6 @@
 import { Component } from '../component'
 import { h, strToHash } from '../core'
-import { boxShadow, zIndex } from './_config'
+import { boxShadow, zIndex, userSelect } from './_config'
 
 interface FabProps {
   onClick?: (e: MouseEvent) => void
@@ -37,6 +37,7 @@ export class Fab extends Component<FabProps> {
         ${left ? 'left: 16px;' : 'right: 16px;'}
         ${center ? 'transform: translateX(50%); right: 50%;' : ''}
         ${boxShadow}
+        ${userSelect}
       }
     `
     const el = document.querySelector(`[data-css-hash*="${cssHash}"]`)

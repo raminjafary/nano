@@ -47,9 +47,7 @@ export class NavigationAction extends Component<ActionProps> {
           this.props.onClick?.({ navigate: !!this.props.link, id: this.id, label: this.props.label, component: this })
         },
       },
-      this.props.icon
-        ? h(Icon, { size: 22, style: 'margin-bottom: 2px;', src: this.props.icon, active: this.props.active })
-        : null,
+      this.props.icon ? h(Icon, { size: 22, style: 'margin-bottom: 2px;', src: this.props.icon }) : null,
       label
     )
   }
@@ -124,9 +122,13 @@ export class Navigation extends Component<NavigationProps> {
         cursor: pointer;
       }
 
-      #bottom_navigation_container .bottom_navigation_action_inactive {
+      #bottom_navigation_container .bottom_navigation_action_inactive{
         color: ${colors.inactive};
         font-size: 12px;
+      }
+
+      #bottom_navigation_container .bottom_navigation_action_inactive i {
+        background-color: ${colors.inactive}
       }
     `
     const styleElement = h('style', {}, styles)

@@ -44,6 +44,7 @@ export const rippleEffect = (rippleClr: string, hoverClr: string) => {
 
 export const zIndex = {
   button: 'unset;',
+  banner: '50;',
   bar: '100;',
   navigation: '100;',
   fab: '200;',

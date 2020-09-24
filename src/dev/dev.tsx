@@ -12,6 +12,7 @@ import { List, ListItem } from '../ui/list'
 import { Icon } from '../ui/icon'
 import { Sheet } from '../ui/sheet'
 import { Tabs, Tab } from '../ui/tabs'
+import { Banner } from '../ui/banner'
 
 const menu = new Menu()
 
@@ -86,6 +87,8 @@ const App = () => {
   return (
     <Fragment>
       <Container>
+        <Banner sticky={152} />
+
         <div style="display: flex; flex-direction: column; align-items: start;">
           <SnackbarBtn />
           <DialogBtn />
@@ -204,7 +207,7 @@ const root = document.getElementById('root')
 // Top Bar
 setTimeout(() => {
   Nano.render(
-    <AppBar autoMerge>
+    <AppBar>
       <Toolbar menu title="Home Page" icons={icons} />
       <Tabs active={1}>
         <Tab>first</Tab>

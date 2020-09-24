@@ -169,8 +169,6 @@ export class Dialog {
 
     const Dialog = (_header: string | undefined, _body: string | undefined, _actions: any) => {
       const actionsArray = _actions.map((action: any) => {
-        console.log('color', action.color, this.defaultActionColor)
-
         return h(
           Button,
           {

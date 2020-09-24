@@ -204,7 +204,7 @@ const root = document.getElementById('root')
 // Top Bar
 setTimeout(() => {
   Nano.render(
-    <AppBar>
+    <AppBar autoMerge>
       <Toolbar menu title="Home Page" icons={icons} />
       <Tabs active={1}>
         <Tab>first</Tab>

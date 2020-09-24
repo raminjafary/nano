@@ -71,6 +71,8 @@ export class Banner extends Component<BannerProps> {
         flex-direction: row;
         align-items: flex-end; 
         margin-left: auto;
+        flex-wrap: wrap;
+        justify-content: flex-end;
         `,
       action: `
         margin-bottom: 0px;

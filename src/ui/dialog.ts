@@ -121,6 +121,9 @@ export class Dialog {
       flex-direction: row;
       align-items: flex-end;
       float: right;
+
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     #dialog_container .dialog .dialog_action {

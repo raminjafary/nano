@@ -15,6 +15,8 @@ interface AppBarProps {
   maxWidth?: number
   autoHide?: boolean
   autoMerge?: boolean
+  background?: string
+  color?: string
 }
 
 interface ToolbarProps {
@@ -174,10 +176,12 @@ export class AppBar extends Component<AppBarProps> {
   }
 
   render() {
+    const { background = '#6200EE', color = 'white' } = this.props
+
     const styles = `
     .appBar_container {
-      background-color: #6200EE;
-      color: white;
+      background: ${background};
+      color: ${color};
       font-weight: 500;
 
       z-index: ${zIndex.bar}

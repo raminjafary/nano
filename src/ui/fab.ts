@@ -9,11 +9,21 @@ interface FabProps {
   left?: boolean
   extended?: boolean
   mini?: boolean
+  background?: string
+  color?: string
 }
 
 export class Fab extends Component<FabProps> {
   render() {
-    const { extended = false, mini = false, center = false, left = false, onClick = () => {} } = this.props
+    const {
+      background = '#6200EE',
+      color = 'white',
+      extended = false,
+      mini = false,
+      center = false,
+      left = false,
+      onClick = () => {},
+    } = this.props
 
     const height = mini ? 40 : extended ? 48 : 56
     const cssHash = strToHash(extended.toString() + mini.toString() + center.toString() + left.toString()) // Math.random().toString(36).substr(2, 9)
@@ -24,12 +34,12 @@ export class Fab extends Component<FabProps> {
         ${mini ? 'width: 40px;' : extended ? 'padding: 0px 12px;' : 'width: 56px;'}
         height: ${height}px;
         position: fixed;
-        background: #6200EE;
+        background: ${background};
         border-radius: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: ${color};
         cursor: pointer;
 
         z-index: ${zIndex.fab}

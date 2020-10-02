@@ -205,7 +205,7 @@ const icons = {
 const root = document.getElementById('root')
 
 // Top Bar
-setTimeout(() => {
+Nano.tick(() => {
   Nano.render(
     <AppBar>
       <Toolbar menu title="Home Page" icons={icons} />
@@ -232,12 +232,12 @@ setTimeout(() => {
 })
 
 // Content
-setTimeout(() => {
+Nano.tick(() => {
   root?.setAttribute('style', 'margin-top: 152px; margin-bottom: 56px;')
   Nano.render(<App />, root)
 })
 
 // Bottom Bar
-setTimeout(() => {
+Nano.tick(() => {
   Nano.render(<NavBar />, document.body, false)
 })

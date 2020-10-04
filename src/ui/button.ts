@@ -75,8 +75,6 @@ export const Button = (props: {
   }
   customStyles += style
 
-  console.log(icon)
-
   return h(
     'a',
     { class: `nano_jsx_button-${cssHash} ${ripple.class} ${className}`, style: customStyles, ...rest },

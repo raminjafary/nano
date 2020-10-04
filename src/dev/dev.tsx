@@ -67,7 +67,6 @@ class NavBar extends Component {
   }
 
   render() {
-    console.log(window.location.pathname)
     const p = window.location.pathname
 
     return (
@@ -207,6 +206,7 @@ const root = document.getElementById('root')
 
 // Top Bar
 task(() => {
+  console.log('START MENU')
   Nano.render(
     <AppBar>
       <Toolbar menu title="Home Page" icons={icons} />
@@ -230,15 +230,26 @@ task(() => {
     document.body,
     false
   )
+  console.log('END MENU')
 })
 
 // Content
-task(() => {
+task(async () => {
+  console.log('START BODY')
+  // try {
+  //   await fetch('https://www.google.com/')
+  // } catch (error) {
+  //   console.log(error.message)
+  // }
+
   root?.setAttribute('style', 'margin-top: 152px; margin-bottom: 56px;')
   Nano.render(<App />, root)
+  console.log('END BODY')
 })
 
 // Bottom Bar
 task(() => {
+  console.log('START NAV')
   Nano.render(<NavBar />, document.body, false)
+  console.log('END NAV')
 })

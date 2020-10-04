@@ -77,8 +77,6 @@ export class Tabs extends Component<TabsProps> {
     const { scroll = false, children, active } = this.props
     const cssHash = strToHash(scroll.toString() + children?.length + active + ripple.class)
 
-    console.log(cssHash)
-
     const styles = `
       .tabs_container-${cssHash} {
         background: #6204ee;

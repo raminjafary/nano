@@ -1,4 +1,5 @@
 import * as Nano from '../core'
+import { task } from '../core'
 import { Snackbar } from '../ui/snackbar'
 import { Dialog } from '../ui/dialog'
 import { Fragment } from '../fragment'
@@ -205,7 +206,7 @@ const icons = {
 const root = document.getElementById('root')
 
 // Top Bar
-Nano.tick(() => {
+task(() => {
   Nano.render(
     <AppBar>
       <Toolbar menu title="Home Page" icons={icons} />
@@ -232,12 +233,12 @@ Nano.tick(() => {
 })
 
 // Content
-Nano.tick(() => {
+task(() => {
   root?.setAttribute('style', 'margin-top: 152px; margin-bottom: 56px;')
   Nano.render(<App />, root)
 })
 
 // Bottom Bar
-Nano.tick(() => {
+task(() => {
   Nano.render(<NavBar />, document.body, false)
 })

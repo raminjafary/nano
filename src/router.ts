@@ -19,7 +19,7 @@ const historyReplace = (path: string) => {
 }
 
 const matchPath = (pathname: string, options: { exact?: boolean; path: string }) => {
-  const { exact = false, path } = options
+  let { exact = false, path } = options
 
   if (!path) {
     return {
@@ -29,12 +29,37 @@ const matchPath = (pathname: string, options: { exact?: boolean; path: string })
     }
   }
 
-  const match = path === '*' ? [pathname] : new RegExp(`^${path}`).exec(pathname)
+  let match
+  let params = {}
+
+  // path with params
+  if (path.includes('/:')) {
+    let pathArr = path.split('/')
+    let pathnameArr = pathname.split('/')
+    pathArr.forEach((p, i) => {
+      if (/^:/.test(p)) {
+        params = { ...params, [p.slice(1)]: pathnameArr[i] }
+        pathArr[i] = pathnameArr[i]
+      }
+    })
+    path = pathArr.join('/')
+  }
+
+  // catch all
+  if (path === '*') match = [pathname]
+
+  // regular path
+  if (!match) match = new RegExp(`^${path}`).exec(pathname)
 
   if (!match) return null
 
   const url = match[0]
   const isExact = pathname === url
+
+  console.log('params', params)
+  console.log('path', path)
+  console.log('isExact', pathname === url)
+  console.log('exact', exact)
 
   if (exact && !isExact) return null
 
@@ -42,11 +67,13 @@ const matchPath = (pathname: string, options: { exact?: boolean; path: string })
     path,
     url,
     isExact,
+    params,
   }
 }
 
 export class Switch extends Component {
   path: string = ''
+  match = { index: -1, path: '' }
 
   didMount() {
     register(this)
@@ -57,39 +84,38 @@ export class Switch extends Component {
   }
 
   handlePop() {
+    this.findChild()
     if (this.shouldUpdate()) this.update()
   }
 
-  shouldUpdate() {
+  findChild() {
+    this.match = { index: -1, path: '' }
+
     for (let i = 0; i < this.props.children.length; i++) {
       const child = this.props.children[i]
       const { path, exact } = child.props
       const match = matchPath(window.location.pathname, { path, exact })
       if (match) {
-        const found = this.path !== path
-        if (found) return true
+        this.match.index = i
+        this.match.path = path
+        return
       }
     }
+  }
 
-    return false
+  shouldUpdate() {
+    return this.path !== this.match.path
   }
 
   render() {
-    let component: any
+    this.findChild()
 
-    this.props.children.forEach((child: any) => {
-      const { path, exact } = child.props
-      const match = matchPath(window.location.pathname, { path, exact })
-      if (match) {
-        // if there is already a matched component, we do not match *
-        if (component && path === '*') return
-        component = child
-        this.path = path
-      }
-    })
+    const child = this.props.children[this.match.index]
 
-    if (component) {
-      let el = _render(component)
+    if (child) {
+      const { path } = child.props
+      this.path = path
+      let el = _render(child)
       return _render(el)
     } else return h('div', { class: 'route' }, 'not found')
   }

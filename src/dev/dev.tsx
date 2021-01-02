@@ -64,7 +64,10 @@ class App extends Component {
             <Router.Link to="/drinks">Drinks</Router.Link>
           </li>
           <li>
-            <Router.Link to="/12345">12345</Router.Link>
+            <Router.Link to="/12345">12345 (normal)</Router.Link>
+          </li>
+          <li>
+            <Router.Link to="/123456">123456 (regex)</Router.Link>
           </li>
           <li>
             <Router.Link to="/12345/detail">12345/detail</Router.Link>
@@ -82,10 +85,16 @@ class App extends Component {
             <Router.Route path="/drinks">
               <Drinks />
             </Router.Route>
-            <Router.Route exact path="/:id">
-              {() => <div>id</div>}
+            <Router.Route exact path="/:id" regex={{ id: /[a-z0-9]{6}/ }}>
+              {() => <div>id (:id regex)</div>}
             </Router.Route>
-            <Router.Route path="/:id/detail">{() => <div>detail</div>}</Router.Route>
+            <Router.Route exact path="/:id">
+              {() => <div>id (:id normal)</div>}
+            </Router.Route>
+            <Router.Route exact path="/:product">
+              {() => <div>id (:product)</div>}
+            </Router.Route>
+            <Router.Route path="/:product/detail">{() => <div>detail</div>}</Router.Route>
             <Router.Route path="*">{() => <div>404</div>}</Router.Route>
           </Router.Switch>
         </div>

@@ -18,8 +18,11 @@ const historyReplace = (path: string) => {
   instances.forEach((instance) => instance.handlePop())
 }
 
-const matchPath = (pathname: string, options: { exact?: boolean; path: string }) => {
-  let { exact = false, path } = options
+const matchPath = (
+  pathname: string,
+  options: { exact?: boolean; path: string; regex?: { [param: string]: RegExp } }
+) => {
+  let { exact = false, path, regex } = options
 
   if (!path) {
     return {
@@ -38,7 +41,17 @@ const matchPath = (pathname: string, options: { exact?: boolean; path: string })
     let pathnameArr = pathname.split('/')
     pathArr.forEach((p, i) => {
       if (/^:/.test(p)) {
-        params = { ...params, [p.slice(1)]: pathnameArr[i] }
+        const key = p.slice(1)
+        const value = pathnameArr[i]
+
+        // if a regex is provided, check it it matches
+        if (regex && regex[key]) {
+          const regexMatch = regex[key].test(value)
+          if (!regexMatch) return null
+        }
+
+        params = { ...params, [key]: value }
+
         pathArr[i] = pathnameArr[i]
       }
     })
@@ -56,10 +69,10 @@ const matchPath = (pathname: string, options: { exact?: boolean; path: string })
   const url = match[0]
   const isExact = pathname === url
 
-  console.log('params', params)
-  console.log('path', path)
-  console.log('isExact', pathname === url)
-  console.log('exact', exact)
+  // console.log('params', params)
+  // console.log('path', path)
+  // console.log('isExact', isExact)
+  // console.log('exact', exact)
 
   if (exact && !isExact) return null
 
@@ -72,6 +85,7 @@ const matchPath = (pathname: string, options: { exact?: boolean; path: string })
 }
 
 export class Switch extends Component {
+  index: number = 0
   path: string = ''
   match = { index: -1, path: '' }
 
@@ -85,6 +99,7 @@ export class Switch extends Component {
 
   handlePop() {
     this.findChild()
+    console.log('should updatre', this.shouldUpdate())
     if (this.shouldUpdate()) this.update()
   }
 
@@ -93,8 +108,8 @@ export class Switch extends Component {
 
     for (let i = 0; i < this.props.children.length; i++) {
       const child = this.props.children[i]
-      const { path, exact } = child.props
-      const match = matchPath(window.location.pathname, { path, exact })
+      const { path, exact, regex } = child.props
+      const match = matchPath(window.location.pathname, { path, exact, regex })
       if (match) {
         this.match.index = i
         this.match.path = path
@@ -104,7 +119,7 @@ export class Switch extends Component {
   }
 
   shouldUpdate() {
-    return this.path !== this.match.path
+    return this.path !== this.match.path || this.index !== this.match.index
   }
 
   render() {
@@ -115,16 +130,21 @@ export class Switch extends Component {
     if (child) {
       const { path } = child.props
       this.path = path
+      this.index = this.match.index
       let el = _render(child)
       return _render(el)
     } else return h('div', { class: 'route' }, 'not found')
   }
 }
 
-export const Route: FC<{ path: string; exact?: boolean; children?: any }> = ({ path, children }) => {
+export const Route: FC<{ path: string; exact?: boolean; regex?: { [param: string]: RegExp }; children?: any }> = ({
+  path,
+  regex,
+  children,
+}) => {
   // pass the path as props to the children
   children.forEach((child: any) => {
-    if (child.props) child.props = { ...child.props, route: { path } }
+    if (child.props) child.props = { ...child.props, route: { path, regex } }
   })
   return children
 }

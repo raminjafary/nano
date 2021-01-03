@@ -10,14 +10,82 @@ import { join } from 'path'
 // @ts-ignore
 import http from 'http'
 
-class App extends Component {
+import * as Router from '../router'
+import { Fragment } from '../fragment'
+
+const Nothing = () => <div></div>
+
+const Home = (props: any) => {
+  return (
+    <Fragment>
+      <h2>Home Page</h2>
+      <p>Nothing on route "{props.route.path}"</p>
+    </Fragment>
+  )
+}
+
+const Latte = () => {
+  return <span>Latte</span>
+}
+
+class Drinks extends Component {
   render() {
-    return <div>Nano JSX App</div>
+    const { path } = this.props.route
+    return (
+      <Fragment>
+        <h2>Drinks</h2>
+
+        <div class="router">
+          <Router.Switch>
+            <Router.Route exact path={`${path}`}>
+              <Nothing />
+            </Router.Route>
+            <Router.Route path={`${path}/latte`}>
+              <Latte />
+            </Router.Route>
+            <Router.Route path={`${path}/milk`}>{() => <span>Milk</span>}</Router.Route>
+          </Router.Switch>
+        </div>
+      </Fragment>
+    )
   }
 }
 
-const app = renderSSR(<App />)
+class App extends Component {
+  render() {
+    return (
+      <Fragment>
+        <div class="router">
+          <Router.Switch>
+            <Router.Route path="/dev/dev.html">
+              <Home />
+            </Router.Route>
+            <Router.Route path="/drinks">
+              <Drinks />
+            </Router.Route>
+            <Router.Route exact path="/:id" regex={{ id: /[a-z0-9]{6}/ }}>
+              {() => <div>id (:id regex)</div>}
+            </Router.Route>
+            <Router.Route exact path="/:id/details" regex={{ id: /[a-z0-9]{6}/ }}>
+              {() => <div>id (:id regex) + details</div>}
+            </Router.Route>
+            <Router.Route exact path="/:id">
+              {() => <div>id (:id normal)</div>}
+            </Router.Route>
+            <Router.Route exact path="/:id/details">
+              {() => <div>id (:id normal)+ details</div>}
+            </Router.Route>
+            <Router.Route path="*">{() => <div>404</div>}</Router.Route>
+          </Router.Switch>
+        </div>
+      </Fragment>
+    )
+  }
+}
+
+const app = renderSSR(<App />, { pathname: '/12345/detail' })
 const { body, head, footer } = Helmet.SSR(app)
+console.log('body', body)
 
 let html = `
 <!DOCTYPE html>

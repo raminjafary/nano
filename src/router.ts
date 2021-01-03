@@ -69,11 +69,6 @@ const matchPath = (
   const url = match[0]
   const isExact = pathname === url
 
-  // console.log('params', params)
-  // console.log('path', path)
-  // console.log('isExact', isExact)
-  // console.log('exact', exact)
-
   if (exact && !isExact) return null
 
   return {
@@ -84,7 +79,7 @@ const matchPath = (
   }
 }
 
-export class Switch extends Component {
+export class Switch extends Component<{ fallback?: any; children?: any }> {
   index: number = 0
   path: string = ''
   match = { index: -1, path: '' }
@@ -99,7 +94,6 @@ export class Switch extends Component {
 
   handlePop() {
     this.findChild()
-    console.log('should updatre', this.shouldUpdate())
     if (this.shouldUpdate()) this.update()
   }
 
@@ -133,7 +127,11 @@ export class Switch extends Component {
       this.index = this.match.index
       let el = _render(child)
       return _render(el)
-    } else return h('div', { class: 'route' }, 'not found')
+    } else if (this.props.fallback) {
+      return _render(this.props.fallback)
+    } else {
+      return h('div', { class: 'route' }, 'not found')
+    }
   }
 }
 

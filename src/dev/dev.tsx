@@ -67,6 +67,9 @@ class App extends Component {
             <Router.Link to="/12345">12345 (normal)</Router.Link>
           </li>
           <li>
+            <Router.Link to="/555123456">555123456 (regex)</Router.Link>
+          </li>
+          <li>
             <Router.Link to="/123456">123456 (regex)</Router.Link>
           </li>
           <li>
@@ -81,12 +84,15 @@ class App extends Component {
         </ul>
 
         <div class="router">
-          <Router.Switch>
+          <Router.Switch fallback={() => <div>404 (not found)</div>}>
             <Router.Route path="/dev/dev.html">
               <Home />
             </Router.Route>
             <Router.Route path="/drinks">
               <Drinks />
+            </Router.Route>
+            <Router.Route exact path="/:id" regex={{ id: /555[a-z0-9]{6}/ }}>
+              {() => <div>id (:id regex) (starts with 555)</div>}
             </Router.Route>
             <Router.Route exact path="/:id" regex={{ id: /[a-z0-9]{6}/ }}>
               {() => <div>id (:id regex)</div>}
@@ -100,7 +106,7 @@ class App extends Component {
             <Router.Route exact path="/:id/details">
               {() => <div>id (:id normal)+ details</div>}
             </Router.Route>
-            <Router.Route path="*">{() => <div>404</div>}</Router.Route>
+            {/* <Router.Route path="*">{() => <div>404</div>}</Router.Route> */}
           </Router.Switch>
         </div>
       </Fragment>
